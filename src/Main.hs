@@ -45,8 +45,8 @@ getScoreboard (WL (WinLoss (Res wn ws) (Res ln ls))) = Scoreboard
     [ Row (Data.Text.pack wn) 1 0 0 (ws-ls)
     , Row (Data.Text.pack ln) 0 0 1 (ls-ws)]
 getScoreboard (D (Draw w l s)) = Scoreboard
-    [ Row (Data.Text.pack w) 0 1 0 s
-    , Row (Data.Text.pack l) 0 1 0 s]
+    [ Row (Data.Text.pack w) 0 1 0 0
+    , Row (Data.Text.pack l) 0 1 0 0]
 
 buildScoreboard :: [Matchup] -> Scoreboard
 buildScoreboard ms = mconcat (L.map (getScoreboard . getMatchupResult) ms `using` parList rseq)
