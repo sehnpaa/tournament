@@ -5,20 +5,19 @@ import Text.Layout.Table
 
 import qualified Types as T
 
-griddify :: [[String]] -> [String]
-griddify = gridLines
+table :: [String] -> [[String]] -> String
+table titles = tableString
     [ column expand left def def
     , column expand center def def
     , column expand center def def
     , column expand center def def
-    , column expand center def def
-    ]
+    , column expand center def def ] unicodeRoundS (titlesH titles) . fmap rowG
 
-render :: T.Scoreboard -> [String]
-render = griddify . appendTitles . fmap renderRow  . T.unRows
+render :: T.Scoreboard -> String
+render = table titles . fmap renderRow . T.unRows
 
-appendTitles :: [[String]] -> [[String]]
-appendTitles = (++) [["Name", "Wins", "Draws", "Losses", "Score"]]
+titles :: [String]
+titles = ["Name", "Wins", "Draws", "Losses", "Score"]
 
 renderRow :: T.Row -> [String]
 renderRow (T.Row n w d l s) = [Text.unpack n, show w, show d, show l, show s]

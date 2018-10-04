@@ -19,7 +19,7 @@ main = TextIO.readFile "matchups.txt" >>= printResult
 
 printResult :: Text -> IO ()
 printResult content = case render . sortScoreboard . buildScoreboard <$> parseMatchups content of
-    Right c -> traverse_ Prelude.putStrLn c
+    Right c -> Prelude.putStrLn c
     Left x -> Prelude.putStrLn $ "Error: " ++ show x
 
 sortScoreboard :: Scoreboard -> Scoreboard
