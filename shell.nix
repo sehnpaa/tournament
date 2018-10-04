@@ -4,14 +4,18 @@ let
 
   inherit (nixpkgs) pkgs;
 
-  f = { mkDerivation, base, parallel, parsec, stdenv, text }:
+  f = { mkDerivation, base, parallel, parsec, stdenv, table-layout
+      , text
+      }:
       mkDerivation {
         pname = "tournament";
         version = "0.1.0.0";
         src = ./.;
         isLibrary = false;
         isExecutable = true;
-        executableHaskellDepends = [ base parallel parsec text ];
+        executableHaskellDepends = [
+          base parallel parsec table-layout text
+        ];
         license = stdenv.lib.licenses.bsd3;
       };
 
