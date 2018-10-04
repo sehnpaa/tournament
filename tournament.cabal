@@ -17,7 +17,8 @@ cabal-version:       >=1.10
 
 executable tournament
   main-is:             Main.hs
-  other-modules:       Parse
+  other-modules:       Helper
+                       Parse
                        Render
                        Types
   -- other-extensions:

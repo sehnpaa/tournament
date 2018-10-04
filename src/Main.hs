@@ -9,6 +9,7 @@ import Data.Ord (comparing)
 import Data.Text
 import Data.Text.IO as TextIO
 
+import Helper (upsert)
 import Parse (parseMatchups)
 import Render (render)
 import Types
@@ -33,13 +34,6 @@ instance Semigroup Scoreboard where
     Scoreboard [] <> ys = ys
     Scoreboard (x:xs) <> ys =
         Scoreboard xs <> Scoreboard (upsert (\a b -> name a == name b) x (unRows ys))
-
-upsert :: Semigroup a => (a -> a -> Bool) -> a -> [a] -> [a]
-upsert _ a [] = [a]
-upsert isMatch x (y:ys) =
-    if isMatch x y
-        then x <> y : ys
-        else y : upsert isMatch x ys
 
 instance Monoid Scoreboard where
     mempty = Scoreboard []
