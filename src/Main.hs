@@ -2,7 +2,6 @@
 
 module Main where
 
-import Data.Foldable (traverse_)
 import Control.Parallel.Strategies
 import Data.List as L
 import Data.Ord (comparing)

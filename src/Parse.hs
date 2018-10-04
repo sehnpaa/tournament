@@ -7,8 +7,6 @@ import Data.Text
 import qualified Text.Parsec as P
 import qualified Text.Parsec.Text as PT
 
-import Data.Monoid
-
 allowedScores :: [Int]
 allowedScores = [0..5]
 
