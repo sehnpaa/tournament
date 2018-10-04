@@ -5,6 +5,7 @@ module Main where
 import Data.Foldable (traverse_)
 import Control.Parallel.Strategies
 import Data.List as L
+import Data.Ord (comparing)
 import Data.Text
 import Data.Text.IO as TextIO
 
@@ -16,12 +17,16 @@ main :: IO ()
 main = TextIO.readFile "matchups.txt" >>= printResult
 
 printResult :: Text -> IO ()
-printResult content = case fmap (sortByWins . buildScoreboard) (parseMatchups content) of
-    Right c -> traverse_ Prelude.putStrLn $ render c
+printResult content = case render . sortScoreboard . buildScoreboard <$> parseMatchups content of
+    Right c -> traverse_ Prelude.putStrLn c
     Left x -> Prelude.putStrLn $ "Error: " ++ show x
 
-sortByWins :: Scoreboard -> Scoreboard
-sortByWins = Scoreboard . sortBy (\(Row _ w1 _ _ _) (Row _ w2 _ _ _) -> compare w2 w1) . unRows
+sortScoreboard :: Scoreboard -> Scoreboard
+sortScoreboard = Scoreboard . sortBy (mconcat rowOrderings) . unRows
+
+-- flip changes the desc to asc and asc to desc
+rowOrderings :: [Row -> Row -> Ordering]
+rowOrderings = [flip $ comparing wins, flip $ comparing draws, comparing losses, flip $ comparing row_score]
 
 instance Semigroup Scoreboard where
     xs <> Scoreboard [] = xs
