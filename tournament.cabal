@@ -20,10 +20,12 @@ executable tournament
   other-modules:       Helper
                        Parse
                        Render
+                       Test
                        Types
   -- other-extensions:
   ghc-options:         -threaded -rtsopts
   build-depends:       base >=4.9 && <5
+                     , QuickCheck
                      , parallel
                      , parsec
                      , table-layout

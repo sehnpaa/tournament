@@ -5,6 +5,9 @@ import Text.Layout.Table
 
 import qualified Types as T
 
+instance Show T.Scoreboard where
+    show = render
+
 table :: [String] -> [[String]] -> String
 table titles = tableString
     [ column expand left def def
